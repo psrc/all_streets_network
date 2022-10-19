@@ -1,9 +1,9 @@
 import geopandas as gpd
 from geopandas.tools import sjoin
 
-roads_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\roads.shp"
-bridges_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\bridges.shp"
-tunnels_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\tunnels.shp"
+# roads_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\roads.shp"
+# bridges_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\bridges.shp"
+# tunnels_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\tunnels.shp"
 buffer_size = 0.00001
 
 # read shp files and add road IDs
@@ -46,11 +46,10 @@ def join_buffer(split_sf, link_no_join, result, buffer_size):
 
     # combine the 2 results: original split (without those not successfully joined) + links joined with buffer
     result_links = result[~result['road_id'].isnull()].append(result_buf)
+    result_links = result_links[["link_id", "road_id", "highway", "name",	"bridge", "tunnel", "oneway", "geometry"]].astype({"road_id": int})
 
     # find list of all links that are duplicated in the process
     link_dup = result_links[result_links["link_id"].duplicated()].values.tolist()
 
     return result_links, link_dup
-    # result_links2 = result_links.astype({"road_id": int})
-    # result_links.to_file(r'C:\\Users\\JLin\\Downloads\\result_buffer.shp')
-    # result_links[["link_id", "road_id", "highway", "name",	"bridge", "tunnel", "oneway", "geometry"]].to_file(r'C:\\Users\\JLin\\Downloads\\result_buffer.shp')
+    
