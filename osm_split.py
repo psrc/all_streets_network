@@ -4,21 +4,25 @@ from geopandas.tools import sjoin
 # roads_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\roads.shp"
 # bridges_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\bridges.shp"
 # tunnels_path = "C:\\Users\\JLin\\OneDrive - Puget Sound Regional Council\\Documents\\psrc_work_files\\OSM\\OSM_shp\\tunnels.shp"
-buffer_size = 0.00001
+# buffer_size = 0.00001
 
 # read shp files and add road IDs
-def read_shp_files(path, projection):
-    sf = gpd.read_file(path)
-    sf = sf.to_crs(2855)
+# def read_shp_files(path):
+#     sf = gpd.read_file(path)
+#     # sf = sf.to_crs(2855)
 
-    road_id = [j for j in range(len(sf))]
-    sf["road_id"] = road_id
+#     road_id = [j for j in range(len(sf))]
+#     sf["road_id"] = road_id
 
-    return sf
+#     return sf
 
 
 # road split + initial results (no buffer)
 def split(split_sf):
+
+    road_id = [j for j in range(len(split_sf))]
+    split_sf["road_id"] = road_id
+
     geom = [i for i in split_sf.geometry.unary_union]
     id = [j for j in range(len(geom))]
     unary = gpd.GeoDataFrame({"link_id":id,"geometry":geom}, crs="EPSG:2855")
