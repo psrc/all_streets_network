@@ -1,0 +1,12 @@
+
+# set buffer size for spatial join
+
+buffer_size : 0.00001
+
+
+# output files
+tunnels_output_file: C:/Users/JLin/Downloads/tunnels.shp
+#tunnels_output_file:  tunnels.shp
+
+bridges_output_file: C:/Users/JLin/Downloads/bridges.shp
+roads_output_file: C:/Users/JLin/Downloads/roads.shp
