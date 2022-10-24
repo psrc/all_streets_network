@@ -1,6 +1,7 @@
 import argparse
 import os
 
+
 def add_run_args(parser, multiprocess=True):
     """
     Run command args
@@ -10,7 +11,8 @@ def add_run_args(parser, multiprocess=True):
                         metavar='PATH',
                         help='path to configs dir')
 
-#if __name__ == '__main__':
+
+# if __name__ == '__main__':
 parser = argparse.ArgumentParser()
 add_run_args(parser)
 args = parser.parse_args()
