@@ -29,7 +29,9 @@ print("start reading roads file")
 # tunnels = gpd.read_file(r'tunnels.shp')
 
 # read in OSM files
-tunnels, bridges, roads = osm_extract.read_road_sf()
+if config['download_osm']:
+    osm_df = osm_extract.download_osm(config['boundary_file_path'])
+    tunnels, bridges, roads = osm_extract.generate_network_topology(osm_df, config['highway_types'])
 
 # go through with the functions in osm_split.py
 def exe_split(name, sf, output, buffer_size):
