@@ -9,7 +9,7 @@ import os
 
 # input files
 links = gpd.read_file(r'C:\Stefan\inputs\all_merge_clip_no_service_footway.shp')
-parcels = gpd.read_file(r'C:\Stefan\inputs\parcel_point_2018.shp')
+#parcels = gpd.read_file(r'C:\Stefan\inputs\parcel_point_2018.shp')
 my_crs = links.crs
 subnet_max = 12
 
@@ -84,27 +84,27 @@ nodes_df = nodes_df[['node_id', 'x', 'y']]
 nodes_df.to_csv(os.path.join(output_dir, 'input_node.csv'), index = False)
 
 # def to find the nearest node to a poi (parcel) on the network
-def ckdnearest(gdA, gdB, acol, bcol):   
-    nA = np.array(list(zip(gdA.geometry.x, gdA.geometry.y)) )
-    nB = np.array(list(zip(gdB.geometry.x, gdB.geometry.y)) )
-    btree = cKDTree(nB)
-    dist, idx = btree.query(nA,k=1)
-    #res = gdB.iloc[idx][bcol].values
-    df = pd.DataFrame.from_dict({'distance': dist.astype(int), acol : gdA[acol].values, bcol : gdB.iloc[idx][bcol].values})
-    return df
+# def ckdnearest(gdA, gdB, acol, bcol):   
+#     nA = np.array(list(zip(gdA.geometry.x, gdA.geometry.y)) )
+#     nB = np.array(list(zip(gdB.geometry.x, gdB.geometry.y)) )
+#     btree = cKDTree(nB)
+#     dist, idx = btree.query(nA,k=1)
+#     #res = gdB.iloc[idx][bcol].values
+#     df = pd.DataFrame.from_dict({'distance': dist.astype(int), acol : gdA[acol].values, bcol : gdB.iloc[idx][bcol].values})
+#     return df
 
-closest_node = ckdnearest(parcels, nodes_gdf, 'parcel_id', 'node_id')
-# prepare node file
-nodes_df = nodes_df[nodes_df['node_id'].isin(closest_node.node_id)]
-nodes_df = nodes_df[['node_id', 'x', 'y']]
-nodes_df['x'] = nodes_df['x'].astype(int)
-nodes_df['y'] = nodes_df['y'].astype(int)
+# closest_node = ckdnearest(parcels, nodes_gdf, 'parcel_id', 'node_id')
+# # prepare node file
+# nodes_df = nodes_df[nodes_df['node_id'].isin(closest_node.node_id)]
+# nodes_df = nodes_df[['node_id', 'x', 'y']]
+# nodes_df['x'] = nodes_df['x'].astype(int)
+# nodes_df['y'] = nodes_df['y'].astype(int)
 
-nodes_df.to_csv(os.path.join(output_dir, 'psrc_2018_nodes.csv'), index = False)
+# nodes_df.to_csv(os.path.join(output_dir, 'psrc_2018_nodes.csv'), index = False)
 
 # add nearest node_id to parcel file
 
-parcels = parcels.merge(closest_node, how = 'left', left_on = 'parcel_id', right_on = 'parcel_id')
+#parcels = parcels.merge(closest_node, how = 'left', left_on = 'parcel_id', right_on = 'parcel_id')
 
 
 
@@ -114,8 +114,8 @@ parcels = parcels.merge(closest_node, how = 'left', left_on = 'parcel_id', right
 
 #parcel node file:
 #parcels = parcels.rename(columns = {'id' : 'node_id'})
-parcels = parcels.rename(columns = {'parcel_id' : 'id'})
-parcels = parcels[['id', 'node_id']]
-parcels['node_id'] = parcels['node_id'].astype('int32')
-parcels['id'] = parcels['id'].astype('int64')
-parcels.to_csv(os.path.join(output_dir, 'parcel_nodes_2018.txt'), sep = ' ', index = False)
+# parcels = parcels.rename(columns = {'parcel_id' : 'id'})
+# parcels = parcels[['id', 'node_id']]
+# parcels['node_id'] = parcels['node_id'].astype('int32')
+# parcels['id'] = parcels['id'].astype('int64')
+# parcels.to_csv(os.path.join(output_dir, 'parcel_nodes_2018.txt'), sep = ' ', index = False)

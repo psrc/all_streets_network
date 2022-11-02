@@ -2,7 +2,20 @@
 # set buffer size for spatial join
 
 buffer_size : 0.00001
+crs: 2855
 
+boundary_file_path: 'W:/gis/projects/OSM/boundary3.geojson'
+
+download_osm: False
+
+# output_dir: C:/Stefan/temp
+output_dir: C:/Joanne_PSRC/temp_data
+
+highway_types: ['trunk', 'trunk_link', 'motorway', 'motorway_link', 
+    'primary', 'primary_link', 'residential', 'road', 'secondary', 
+    'service', 'tertiary', 'tertiary_link', 'secondary_link', 
+    'cycleway', 'footway', 'pedestrian', 'living_street', 'unclassified', 
+    'steps']
 
 # output files
 tunnels_output_file: T:\2022October\Joanne\tunnels.shp
