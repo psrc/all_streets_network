@@ -51,8 +51,8 @@ def generate_network_topology(osm_df, highway_types):
     roads = split_segments(roads)
 
     #return tunnels, bridges, roads
-    roads = roads.append([tunnels, bridges])
-    return roads
+    # roads = roads.append([tunnels, bridges])
+    return roads, tunnels, bridges
 
 def split_segments(gdf, crs=None):
     if not crs:
@@ -60,7 +60,7 @@ def split_segments(gdf, crs=None):
 
     print("start splitting tunnels")
     gdf_copy = gdf.copy()
-    gdf_copy.geometry = gdf_copy.geometry.buffer(0.01)
+    gdf_copy.geometry = gdf_copy.geometry.buffer(0.00001)
     #link, no_join, dup = osm_split.split(sf)
     un = gdf.geometry.unary_union
     geom = [i for i in un]

@@ -8,7 +8,8 @@ boundary_file_path: 'W:/gis/projects/OSM/boundary3.geojson'
 
 download_osm: False
 
-output_dir: C:/Stefan/temp
+# output_dir: C:/Stefan/temp
+output_dir: C:/Joanne_PSRC/temp_data
 
 highway_types: ['trunk', 'trunk_link', 'motorway', 'motorway_link', 
     'primary', 'primary_link', 'residential', 'road', 'secondary', 
