@@ -7,52 +7,31 @@ import pandas as pd
 from pathlib import Path
 import yaml
 
-
-# import osm_split
 import osm_extract
 import configuration
 
 
 file = Path().joinpath(configuration.args.configs_dir, "config.yaml")
-#%%
+
 config = yaml.safe_load(open(file))
 
 
 # read in OSM files
 if config['download_osm']:
-    print("start downloading roads file")
+    print("start downloading osm")
     osm_gdf = osm_extract.download_osm(config['boundary_file_path'], config['crs'])
-    osm_extract.gdf_to_shapefile(osm_gdf, config['output_dir'], 'osm_extract.shp')
     
 else:
     print("start reading roads file")
     osm_gdf = gpd.read_file(Path(config['output_dir'])/'osm_extract.shp')
 
-# split_net = osm_extract.generate_network_topology(osm_gdf, config['highway_types'])
-roads, tunnels, bridges = osm_extract.generate_network_topology(osm_gdf, config['highway_types'])
 
-# osm_extract.gdf_to_shapefile(split_net, config['output_dir'], 'all_split.shp')
+split_net = osm_extract.generate_network_topology(osm_gdf, config['highway_types'])
+
+# save network
+osm_extract.gdf_to_shapefile(split_net, config['output_dir'], 'all_split.shp')
 # split_net.to_file(Path(config['output_dir'])/'all_split.shp')
 
-tunnels2 = osm_extract.split_segments(tunnels)
-
-# go through with the functions in osm_split.py
-
-# def split_segments(name, sf, output, buffer_size, crs):
-#     sf = sf.to_crs(2855)
-
-#     print("start splitting tunnels")
-#     link, no_join, dup = osm_split.split(sf)
-#     final_link, final_dup = osm_split.join_buffer(sf, no_join, link, buffer_size)
-
-#     print(name + "duplicates: ")
-#     print(final_dup)
-#     final_link.to_file(output)
-
-
-# exe_split("tunnels", tunnels, config['tunnels_output_file'], config['buffer_size'])
-# exe_split("bridges", tunnels, config['bridges_output_file'], config['buffer_size'])
-# exe_split("roads", tunnels, config['roads_output_file'], config['buffer_size'])
 
 
 

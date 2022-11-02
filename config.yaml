@@ -17,9 +17,3 @@ highway_types: ['trunk', 'trunk_link', 'motorway', 'motorway_link',
     'cycleway', 'footway', 'pedestrian', 'living_street', 'unclassified', 
     'steps']
 
-# output files
-tunnels_output_file: T:\2022October\Joanne\tunnels.shp
-#tunnels_output_file:  tunnels.shp
-
-bridges_output_file: T:\2022October\Joanne\bridges.shp
-roads_output_file: T:\2022October\Joanne\roads.shp
