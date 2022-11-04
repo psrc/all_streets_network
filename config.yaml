@@ -4,7 +4,7 @@
 buffer_size : 0.00001
 crs: 2855
 
-boundary_file_path: 'W:/gis/projects/OSM/boundary3.geojson'
+boundary_file_path: 'W:/gis/projects/OSM/scripts/data/psrc_region.geojson'
 
 download_osm: False
 
