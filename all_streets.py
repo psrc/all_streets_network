@@ -28,13 +28,13 @@ else:
 # split downloaded osm network
 split_net = osm_extract.generate_network_topology(osm_gdf, config['highway_types'])
 # add ij nodes
-split_net = osm_extract.ij_nodes(split_net)
+network, all_nodes = osm_extract.ij_nodes(split_net)
 
 
 # save network
 # osm_extract.gdf_to_shapefile(split_net, config['output_dir'], 'all_split.shp')
-split_net.to_file(Path(config['output_dir'])/'all_split3.shp')
-
+network.to_file(Path(config['output_dir'])/'all_split4.shp')
+all_nodes.to_file(Path(config['output_dir'])/'all_nodes.shp')
 
 
 
