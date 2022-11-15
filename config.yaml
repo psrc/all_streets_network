@@ -1,12 +1,15 @@
 
-# set buffer size for spatial join
+download_osm: False
 
+# set buffer size for spatial join
 buffer_size : 0.00001
-crs: 2855
+crs: 2285
 
 boundary_file_path: 'W:/gis/projects/OSM/scripts/data/psrc_region.geojson'
 
-download_osm: False
+osm_file_path: 'W:/gis/projects/OSM/scripts/data/osm_extract.shp'
+islands_file_path: 'W:/gis/projects/OSM/scripts/data/islands.shp'
+
 
 # output_dir: C:/Stefan/temp
 output_dir: C:/Joanne_PSRC/temp_data

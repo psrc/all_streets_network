@@ -20,20 +20,32 @@ config = yaml.safe_load(open(file))
 if config['download_osm']:
     print("start downloading osm")
     osm_gdf = osm_extract.download_osm(config['boundary_file_path'], config['crs'])
+
+    print("saving extracted osm to directory")
+    osm_gdf.to_file(Path(config['output_dir'])/'osm_extract_2285.shp')
     
 else:
     print("start reading roads file")
-    osm_gdf = gpd.read_file(Path(config['output_dir'])/'osm_extract.shp')
+    osm_gdf = gpd.read_file(Path(config['osm_file_path'])).to_crs(config['crs'])
+
 
 # split downloaded osm network
 split_net = osm_extract.generate_network_topology(osm_gdf, config['highway_types'])
 # add ij nodes
 network, all_nodes = osm_extract.ij_nodes(split_net)
 
+main_network = osm_extract.rm_sub_network(network, config['islands_file_path'], config['crs'])
 
-# save network
-# osm_extract.gdf_to_shapefile(split_net, config['output_dir'], 'all_split.shp')
-network.to_file(Path(config['output_dir'])/'all_split4.shp')
+
+# save results
+
+# network before removing disconnected sub-networks
+# network.to_file(Path(config['output_dir'])/'all_split.shp')
+
+# final network
+main_network.to_file(Path(config['output_dir'])/'final_network.shp')
+
+# list of all nodes in the network
 all_nodes.to_file(Path(config['output_dir'])/'all_nodes.shp')
 
 

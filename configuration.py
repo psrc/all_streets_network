@@ -1,14 +1,14 @@
 import argparse
-import os
-
+from pathlib import Path
 
 def add_run_args(parser, multiprocess=True):
     """
     Run command args
     """
     parser.add_argument('-c', '--configs_dir',
-                        type=str,
+                        type=Path,
                         metavar='PATH',
+                        default=Path(__file__).absolute().parent,
                         help='path to configs dir')
 
 
