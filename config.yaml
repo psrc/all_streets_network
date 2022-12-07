@@ -4,15 +4,18 @@ download_osm: False
 # set buffer size for spatial join
 buffer_size : 0.00001
 crs: 2285
+netbuffer_crs: 4326
 
 boundary_file_path: 'W:/gis/projects/OSM/scripts/data/psrc_region.geojson'
-
 osm_file_path: 'W:/gis/projects/OSM/scripts/data/osm_extract.shp'
-islands_file_path: 'W:/gis/projects/OSM/scripts/data/islands.shp'
+psrc_buffer_file_path: 'W:/gis/projects/OSM/scripts/data/psrc_region_buffer.shp'
+
+# islands_file_path: 'W:/gis/projects/OSM/scripts/data/islands.shp'
+islands_file_path: 'W:/gis/projects/OSM/scripts/data/islands_wID.shp'
 
 
 # output_dir: C:/Stefan/temp
-output_dir: C:/Joanne_PSRC/temp_data
+output_dir: C:/Joanne_PSRC/temp_data/result_1206
 
 highway_types: ['trunk', 'trunk_link', 'motorway', 'motorway_link', 
     'primary', 'primary_link', 'residential', 'road', 'secondary', 
