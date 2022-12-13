@@ -20,6 +20,7 @@ def download_osm(boundary_file, psrc_buffer_file, crs):
     gdf = geopandas_osm.osm.query_osm('way', poly, recurse='down', tags='highway')
     gdf = gdf[gdf.type == 'LineString'][['highway', 'name', 'geometry', 'bridge', 'tunnel', 'oneway']]
     gdf = gdf.to_crs(crs)
+    print("complete download")
 
     # clip network with buffered psrc region
     psrc_buffer = gpd.read_file(Path(psrc_buffer_file)).to_crs(crs)
@@ -114,6 +115,7 @@ def ij_nodes(gdf):
     nodes_dict = dict(enumerate(points, 1))
     nodes_dict = dict([(value, key) for key, value in nodes_dict.items()])
 
+    print("add i and j nodes to network")
     gdf_ij["i_node"] = gdf_ij['points_start'].apply(lambda x: str(nodes_dict[x]))
     gdf_ij["j_node"] = gdf_ij['points_end'].apply(lambda x: str(nodes_dict[x]))
     gdf_ij = gdf_ij.drop(columns=['points_start', 'points_end'])
@@ -137,6 +139,8 @@ def ij_nodes(gdf):
 
 # to remove disconnected sub-networks that are not on islands
 def rm_sub_network(gdf, nodes_gdf, islands):
+
+    print("remove disconnected sub-networks")
     x_graph = nx.Graph()
     graph = nx.from_pandas_edgelist(gdf, 'i_node', 'j_node',
                                     ['id', 'geometry', 'highway', 'name', 'bridge', 'tunnel', 'oneway', 'road_id',
@@ -179,6 +183,7 @@ def rm_sub_network(gdf, nodes_gdf, islands):
 # create data input for netbuffer: link and node
 def create_link_node(gdf, nodes_gdf, out_crs):
 
+    print("create links and nodes csv files")
     gdf_link = gdf[['link_id', 'i_node', 'j_node', 'oneway', 'geometry']].copy()
 
     #  calculate the distance in miles
@@ -193,7 +198,6 @@ def create_link_node(gdf, nodes_gdf, out_crs):
     links_op = gdf_link[gdf_link['oneway'] != 'yes'][['i_node', 'j_node', 'distance']].copy()
     links_op['from'] = links_op['j_node']
     links_op['to'] = links_op['i_node']
-    links_op['distance'] = links_op['distance']
     links = links.append(links_op[['from', 'to', 'distance']].copy())
 
     # node.csv for netbuffer
