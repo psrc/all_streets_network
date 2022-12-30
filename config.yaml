@@ -15,7 +15,7 @@ islands_file_path: 'W:/gis/projects/OSM/scripts/data/islands_wID.shp'
 
 
 # output_dir: C:/Stefan/temp
-output_dir: 'C:/Joanne_PSRC/temp_data/result_1207'
+output_dir: 'C:/workspace/netbuffer_results'
 
 highway_types: ['trunk', 'trunk_link', 'motorway', 'motorway_link', 
     'primary', 'primary_link', 'residential', 'road', 'secondary', 

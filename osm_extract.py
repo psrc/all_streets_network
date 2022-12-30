@@ -125,8 +125,9 @@ def ij_nodes(gdf):
                              'coords': nodes_dict.keys()})
     df_nodes['geom_x'] = df_nodes['coords'].apply(lambda x: x[0])
     df_nodes['geom_y'] = df_nodes['coords'].apply(lambda x: x[1])
-    nodes_gdf = gpd.GeoDataFrame(df_nodes, geometry=gpd.points_from_xy(df_nodes['geom_x'], df_nodes['geom_y'])).drop(
-        columns=['coords', 'geom_x', 'geom_y']).set_crs(gdf_ij.crs)
+    nodes_gdf = gpd.GeoDataFrame(df_nodes,
+                                 geometry=gpd.points_from_xy(df_nodes['geom_x'], df_nodes['geom_y']),
+                                 crs=gdf_ij.crs).drop(columns=['coords', 'geom_x', 'geom_y'])
 
     # node.csv for netbuffer
     # nodes2 = nodes_gdf.copy().to_crs(4326)  # change coordinates to wgs84
@@ -157,7 +158,7 @@ def rm_sub_network(gdf, nodes_gdf, islands):
     all_disconnected = pd.concat(df_list, ignore_index=True)
 
     # create a gdf out of the disconnected network and clip with island shp
-    gdf_disconnect = gpd.GeoDataFrame(all_disconnected, geometry='geometry').set_crs(gdf.crs)
+    gdf_disconnect = gpd.GeoDataFrame(all_disconnected, geometry='geometry', crs=gdf.crs)
 
     # keep only networks on islands: clip disconnected networks using islands
     islands = gpd.read_file(Path(islands)).to_crs(gdf.crs)
@@ -168,7 +169,7 @@ def rm_sub_network(gdf, nodes_gdf, islands):
 
     # gdf of main network
     df_final_network = nx.to_pandas_edgelist(sep_graph[0]).append(island_network)
-    final_network = gpd.GeoDataFrame(df_final_network, geometry='geometry').set_crs(gdf.crs)
+    final_network = gpd.GeoDataFrame(df_final_network, geometry='geometry', crs=gdf.crs)
 
     # node gdf
     final_nodes = nodes_gdf.copy()

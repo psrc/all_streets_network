@@ -1,0 +1,20 @@
+input_table_list:
+  - tablename: zone_data
+    filename: maz.csv
+    index_col: MAZ
+#    h5_tablename: parcel_data
+
+network: build
+network_settings_file: create_network.yaml
+
+distance_units: miles
+
+max_dist: 0.02
+zones_lon: long
+zones_lat: lat
+
+
+
+models:
+  - nearby_zones
+  - write_daysim_files
