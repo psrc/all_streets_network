@@ -9,7 +9,7 @@ network_settings_file: create_network.yaml
 
 distance_units: miles
 
-max_dist: 0.02
+max_dist: 2
 zones_lon: long
 zones_lat: lat
 
